@@ -13,10 +13,6 @@ export default function Index() {
       <Text className="font-bold font-rubik text-3xl my-12">
         Welcome to Swipeo
       </Text>
-      <Link href="/sign-in">Sign in</Link>
-      <Link href="/explore">Explore</Link>
-      <Link href="/profile">Profile</Link>
-      <Link href="/jobs/1">Jobs</Link>
     </View>
   );
 }

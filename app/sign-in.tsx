@@ -30,7 +30,7 @@ const signIn = () => {
   };
 
   return (
-    <View className="bg-white h-full flex-1">
+    <SafeAreaView className="bg-white h-full flex-1">
       <ScrollView
         contentContainerStyle={{
           height: "100%",
@@ -69,7 +69,7 @@ const signIn = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
