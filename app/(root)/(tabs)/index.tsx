@@ -1,6 +1,6 @@
 import icons from "@/constants/icons";
 import images from "@/constants/images";
-import { Link } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import {
   Image,
   Text,
@@ -12,22 +12,57 @@ import {
   Button,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React from "react";
+import React, { useEffect } from "react";
 import Search from "@/components/Search";
 import { Card, FeaturedCard } from "@/components/Cards";
 import Filters from "@/components/Filters";
 import { useGlobalContext } from "@/lib/global-provider";
 import seed from "@/lib/seed";
+import { useAppwrite } from "@/lib/useAppwrite";
+import { getLatestProperties, getProperties } from "@/lib/appwrite";
 
 export default function Index() {
   const { user } = useGlobalContext();
+  const params = useLocalSearchParams<{ query?: string; filter: string }>();
+
+  const { data: latestProperties, loading: latestPropertiesLoading } =
+    useAppwrite({
+      fn: getLatestProperties,
+    });
+
+  const {
+    data: properties,
+    refetch,
+    loading,
+  } = useAppwrite({
+    fn: getProperties,
+    params: {
+      filter: params.filter!,
+      query: params.query!,
+      limit: 6,
+    },
+    skip: true,
+  });
+
+  useEffect(() => {
+    refetch({
+      filter: params.filter!,
+      query: params.query!,
+      limit: 6,
+    });
+  }, [params.filter, params.query]);
+
+  const handleCardPress = (id: string) => router.push(`./jobs/${id}`);
 
   return (
     <SafeAreaView className="bg-white h-full">
-      {/*Just to seed some new data <Button title="Seed" onPress={seed} />*/}
+      {/*Just to seed some new data*/}
+      {/*<Button title="Seed" onPress={seed} */}
       <FlatList
-        data={[1, 2, 3, 4]}
-        renderItem={({ item }) => <Card />}
+        data={properties}
+        renderItem={({ item }) => (
+          <Card item={item} onPress={() => handleCardPress(item.$id)} />
+        )}
         keyExtractor={(item) => item.toString()}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -65,8 +100,13 @@ export default function Index() {
                 </TouchableOpacity>
               </View>
               <FlatList
-                data={[5, 6, 7]}
-                renderItem={({ item }) => <FeaturedCard />}
+                data={latestProperties}
+                renderItem={({ item }) => (
+                  <FeaturedCard
+                    item={item}
+                    onPress={() => handleCardPress(item.$id)}
+                  />
+                )}
                 keyExtractor={(item) => item.toString()}
                 horizontal={true}
                 bounces={false}
