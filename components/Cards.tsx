@@ -45,7 +45,7 @@ export const FeaturedCard = ({ onPress }: Props) => {
   );
 };
 
-export const Cards = ({ onPress }: Props) => {
+export const Card = ({ onPress }: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
