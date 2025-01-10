@@ -57,10 +57,10 @@ const tabs = () => {
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
+          title: "Jobs",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.search} title="Home" />
+            <TabIcon focused={focused} icon={icons.search} title="Jobs" />
           ),
         }}
       />
@@ -70,7 +70,7 @@ const tabs = () => {
           title: "Profile",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="Home" />
+            <TabIcon focused={focused} icon={icons.person} title="Profile" />
           ),
         }}
       />

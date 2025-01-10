@@ -46,7 +46,6 @@ const SettingsItem = ({
 
 const profile = () => {
   const { user, refetch } = useGlobalContext();
-
   const handleLogout = async () => {
     const result = await logout();
     refetch();
@@ -70,9 +69,7 @@ const profile = () => {
         <View className="flex-row justify-center flex mt-5">
           <View className="flex flex-col items-center relative mt-5">
             <Image
-              source={{
-                uri: "https://i.pinimg.com/originals/7c/ee/6f/7cee6fa507169843e3430a90dd5377d4.jpg",
-              }}
+              source={images.avatar}
               className="size-44 relative rounded-full"
             />
             <TouchableOpacity className="absolute bottom-11 right-2">
